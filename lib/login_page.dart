@@ -26,7 +26,7 @@ class _loginPageState extends State<LoginPage>{
                   hintText: "Example@email.com",hintStyle: TextStyle(fontSize: 15,color: Colors.grey)),
             ),
             TextField(
-              controller: emailController,
+              controller: passwordController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),),
