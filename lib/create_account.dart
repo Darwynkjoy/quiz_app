@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget{
+class CreateAccount extends StatefulWidget{
   @override
-  State<LoginPage> createState()=> _loginPageState();
+  State<CreateAccount> createState()=> _createAccountState();
 }
-class _loginPageState extends State<LoginPage>{
+class _createAccountState extends State<CreateAccount>{
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   @override
@@ -17,8 +17,8 @@ class _loginPageState extends State<LoginPage>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 150,),
-            Text("Login",style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),),
-            Text("Welcome back",style: TextStyle(fontSize: 18,color: Colors.white),),
+            Text("Create account",style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),),
+            Text("Welcome to Quizapp!",style: TextStyle(fontSize: 20,color: Colors.white),),
             SizedBox(height: 80,),
             TextField(
               cursorColor: Colors.blue,
