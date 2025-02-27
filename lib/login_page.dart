@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/create_account.dart';
+import 'package:quiz_app/forgot_password.dart';
 
-class LoginPage extends StatefulWidget{
+class LoginPage extends StatefulWidget {
   @override
-  State<LoginPage> createState()=> _loginPageState();
+  State<LoginPage> createState() => _loginPageState();
 }
-class _loginPageState extends State<LoginPage>{
-  TextEditingController emailController=TextEditingController();
-  TextEditingController passwordController=TextEditingController();
+
+class _loginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
@@ -17,71 +20,125 @@ class _loginPageState extends State<LoginPage>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 150,),
-            Text("Login",style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),),
-            Text("Welcome back",style: TextStyle(fontSize: 18,color: Colors.white),),
-            SizedBox(height: 80,),
+            Text(
+              "Login",
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "Log in to track your progress and continue your quiz journey.",
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            Spacer(),
             TextField(
               cursorColor: Colors.blue,
               controller: emailController,
               decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2,color: Colors.blue),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2,color: Colors.white),
-                ),
-                  label: Text("Email"),labelStyle: TextStyle(color: Colors.blue),
-                  hintText: "Example@email.com",hintStyle: TextStyle(fontSize: 15,color: Colors.grey)),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(width: 2, color: Colors.blue),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(width: 2, color: Colors.white),
+                  ),
+                  label: Text("Email"),
+                  labelStyle: TextStyle(color: Colors.blue),
+                  hintText: "Example@email.com",
+                  hintStyle: TextStyle(fontSize: 15, color: Colors.grey)),
             ),
-            SizedBox(height: 30,),
+            Spacer(),
             TextField(
               cursorColor: Colors.blue,
               controller: passwordController,
               decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2,color: Colors.blue),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2,color: Colors.white),
-                ),
-                  label: Text("Password"),labelStyle: TextStyle(color: Colors.blue),
-                  hintText: "Enter your password",hintStyle: TextStyle(fontSize: 15,color: Colors.grey)),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(width: 2, color: Colors.blue),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(width: 2, color: Colors.white),
+                  ),
+                  label: Text("Password"),
+                  labelStyle: TextStyle(color: Colors.blue),
+                  hintText: "Enter your password",
+                  hintStyle: TextStyle(fontSize: 15, color: Colors.grey)),
             ),
             Row(
               children: [
                 Spacer(),
-                TextButton(onPressed: (){}, child: Text("Forgot Password ?",style: TextStyle(fontSize: 16,color: Colors.blue,fontWeight: FontWeight.bold),)),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotPassword()));
+                    },
+                    child: Text(
+                      "Forgot Password ?",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold),
+                    )),
               ],
             ),
-            SizedBox(height: 20,),
+            Spacer(),
             Center(
               child: SizedBox(
-                height: 45,
-                width: 300,
-                child: ElevatedButton(onPressed: (){}, child: Text("Login",style: TextStyle(fontSize: 16,color: Colors.blue,fontWeight: FontWeight.bold),))),
+                  height: 45,
+                  width: 300,
+                  child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold),
+                      ))),
             ),
-            SizedBox(height: 20,),
+            Spacer(),
             Row(
               children: [
-                Flexible(child: Divider(color: Colors.white,)),
+                Flexible(
+                    child: Divider(
+                  color: Colors.white,
+                )),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Text("don't have an account ?",style: TextStyle(fontSize: 14,color: Colors.grey),),
+                  child: Text(
+                    "don't have an account ?",
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
                 ),
-                Flexible(child: Divider(color: Colors.white,)),
+                Flexible(
+                    child: Divider(
+                  color: Colors.white,
+                )),
               ],
             ),
-            SizedBox(height: 40,),
+            Spacer(),
             Center(
               child: SizedBox(
-                height: 45,
-                width: 300,
-                child: ElevatedButton(onPressed: (){}, child: Text("Create an account",style: TextStyle(fontSize: 16,color: Colors.blue,fontWeight: FontWeight.bold),))),
+                  height: 45,
+                  width: 300,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateAccount()));
+                      },
+                      child: Text(
+                        "Create an account",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold),
+                      ))),
             ),
+            Spacer(),
           ],
         ),
       ),
