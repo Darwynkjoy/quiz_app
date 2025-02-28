@@ -1,24 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/database.dart';
-import 'package:random_string/random_string.dart';
-class AddQuiz extends StatefulWidget {
-  const AddQuiz({super.key});
+class EditQuiz extends StatefulWidget {
+  final String id;
+  final String question;
+  final String answer;
+  final String option2;
+  final String option3;
+  final String option4;
+
+  const EditQuiz(
+    {super.key,
+    required this.id,
+    required this.question,
+    required this.answer,
+    required this.option2,
+    required this.option3,
+    required this.option4}
+    );
   @override
-  State<AddQuiz> createState() => _AddQuizState();
+  State<EditQuiz> createState() => _EditQuizState();
   }
 
-class _AddQuizState extends State<AddQuiz> {
-  TextEditingController questionController=TextEditingController();
-  TextEditingController answerController=TextEditingController();
-  TextEditingController wrongController1=TextEditingController();
-  TextEditingController wrongController2=TextEditingController();
-  TextEditingController wrongController3=TextEditingController();
+class _EditQuizState extends State<EditQuiz> {
+  late TextEditingController questionController=TextEditingController();
+  late TextEditingController answerController=TextEditingController();
+  late TextEditingController wrongController1=TextEditingController();
+  late TextEditingController wrongController2=TextEditingController();
+  late TextEditingController wrongController3=TextEditingController();
+
+  @override
+  void initState(){
+    super.initState();
+    questionController = TextEditingController(text: widget.question);
+    answerController = TextEditingController(text: widget.answer);
+    wrongController1 = TextEditingController(text: widget.option2);
+    wrongController2 = TextEditingController(text: widget.option3);
+    wrongController3 = TextEditingController(text: widget.option4);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("${widget}",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
+        centerTitle: false,
         backgroundColor: Colors.black,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
@@ -55,7 +80,7 @@ class _AddQuizState extends State<AddQuiz> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              Spacer(),
               Text("Enter the answer",style: TextStyle(fontSize: 18,color: Colors.white),),
               SizedBox(height: 5,),
               TextField(
@@ -147,22 +172,21 @@ class _AddQuizState extends State<AddQuiz> {
                     width: 300,
                     child: ElevatedButton(
                         onPressed: ()async{
-                          String id=randomAlphaNumeric(10);
-                          Map<String,dynamic> flutterInfoMap={
-                            "question":questionController.text.trim(),
-                            "answer":answerController.text.trim(),
-                            "option2":wrongController1.text.trim(),
-                            "option3":wrongController2.text.trim(),
-                            "option4":wrongController3.text.trim(),
-                            "id":id,
+                          Map<String,dynamic> updateInfo={
+                            "question":questionController.text,
+                            "answer":answerController.text,
+                            "option2":wrongController1.text,
+                            "option3":wrongController2.text,
+                            "option4":wrongController3.text,
+                            "id":widget.id,
                           };
                           if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
                           && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
                           && wrongController3.text.isNotEmpty){
-                          await Database.addflutterDetails(flutterInfoMap, id);
-                          ScaffoldMessenger.of(context).showSnackBar(
+                           await Database.updateflutterDetails(widget.id, updateInfo);
+                            ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text("Question added successfully!"),
+                                content: Text("Question updated successfully!"),
                                 backgroundColor: Colors.green,
                               ),
                             );
@@ -174,22 +198,22 @@ class _AddQuizState extends State<AddQuiz> {
                               wrongController3.clear();
                             });
                             Navigator.pop(context);
-                          }else{
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            }else{
+                              ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("Fill all textfields"),
                                 backgroundColor: Colors.red,
                               ),
                             );
-                          }
-                        },
-                        child: Text(
-                          "Add question",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold),
-                        ))),
+                            }
+                            },
+                            child: Text(
+                              "Edit question",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ))),
                             ),
               ),
           ],

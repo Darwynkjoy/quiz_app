@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/add_quiz.dart';
 import 'package:quiz_app/database.dart';
+import 'package:quiz_app/edit_quiz.dart';
 class QuestionsPage extends StatefulWidget {
   final String name;
   const QuestionsPage({super.key,required this.name});
@@ -31,6 +32,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("${widget.name}",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
+        centerTitle: false,
         backgroundColor: Colors.black,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
@@ -62,7 +64,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("10 questions",style: TextStyle(fontSize: 20,color: Colors.white),),
+            Text("Total of ${snapshots.data!.docs.length} questions",style: TextStyle(fontSize: 20,color: Colors.white),),
             Expanded(
               child: ListView.builder(
                 itemCount: snapshots.data!.docs.length,
@@ -82,7 +84,32 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           Text("${flutterQuestions["question"]}",
                           style: TextStyle(fontSize: 16,color: Colors.white),maxLines: 2,overflow: TextOverflow.ellipsis,),
                           Spacer(),
-                          Text("answer: ${flutterQuestions["answer"]}",style: TextStyle(fontSize: 16,color: Colors.white),maxLines: 3,overflow: TextOverflow.ellipsis,),
+                          Row(
+                            children: [
+                              Text("answer: ${flutterQuestions["answer"]}",style: TextStyle(fontSize: 16,color: Colors.white),maxLines: 3,overflow: TextOverflow.ellipsis,),
+                              Spacer(),
+                              IconButton(onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditQuiz(id: flutterQuestions.id,question: flutterQuestions["question"], answer: flutterQuestions["answer"], option2: flutterQuestions["option2"], option3: flutterQuestions["option3"], option4: flutterQuestions["option4"])));
+                              }, icon: Icon(Icons.edit,color: Colors.lightGreenAccent,)),
+                              IconButton(onPressed: ()async{
+                                showDialog(context: context, builder: (BuildContext context){
+                                  return AlertDialog(
+                                    backgroundColor: const Color.fromARGB(255, 51, 51, 51),
+                                    title: Text("Do you want to Delete the question ?",style: TextStyle(fontSize: 18,color: Colors.white),),
+                                    actions: [
+                                      TextButton(onPressed: ()async{
+                                        await Database.deleteflutterDetails(flutterQuestions["id"]);
+                                        Navigator.pop(context);
+                                      }, child: Text("Yes",style: TextStyle(fontSize: 15,color: Colors.red),)),
+                                      TextButton(onPressed: (){
+                                        Navigator.pop(context);
+                                      }, child: Text("No",style: TextStyle(fontSize: 15,color: Colors.white),))
+                                    ],
+                                  );
+                                });
+                              }, icon: Icon(Icons.delete,color: Colors.red,)),
+                            ],
+                          ),
                         ],
                       ),
                     ),
