@@ -125,7 +125,15 @@ class _loginPageState extends State<LoginPage> {
                   width: 300,
                   child: ElevatedButton(
                       onPressed: () {
+                        if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
                         _login();
+                        }else{
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                            content: Text("Email and password should not be empty"),
+                            backgroundColor: Colors.red,
+                            ));
+                        }
                       },
                       child: Text(
                         "Login",

@@ -131,17 +131,24 @@ Future <void> _signUp()async{
                   width: 300,
                   child: ElevatedButton(
                       onPressed: () {
-                        if(passwordController.text.trim() == repasswordController.text.trim()){
-                          _signUp();
-                        }/*else if(email){
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Email incorrect"), backgroundColor: Colors.red),
-                          );
-                        }*/else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Passwords do not match"), backgroundColor: Colors.red),
-                          );}
-                      },
+                          if (emailController.text.trim().isEmpty || 
+                              passwordController.text.trim().isEmpty || 
+                              repasswordController.text.trim().isEmpty) {
+                                
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Please fill in all fields!"), backgroundColor: Colors.red),
+                            );
+
+                          } else if (passwordController.text.trim() != repasswordController.text.trim()) {
+                            
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Passwords do not match!"), backgroundColor: Colors.red),
+                            );
+
+                          } else {
+                            _signUp();
+                          }
+                        },
                       child: Text(
                         "Create account",
                         style: TextStyle(
