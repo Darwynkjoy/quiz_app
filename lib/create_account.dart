@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/login_page.dart';
 
@@ -11,6 +12,34 @@ class _createAccountState extends State<CreateAccount> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController repasswordController = TextEditingController();
+
+Future <void> _signUp()async{
+    try{
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim());
+        print("User signed up");
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage()));
+    }catch(e){
+      print("Signup error: $e");
+    }
+  }
+
+  void showErrorDialog(String message){
+    showDialog(context: context,
+    builder: (BuildContext context)=>AlertDialog(
+      title: Text("Error"),
+      content: Text(message),
+      actions: [
+        TextButton(onPressed: (){
+          Navigator.of(context).pop();
+        },
+        child: Text("OK"))
+      ],
+    )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +71,7 @@ class _createAccountState extends State<CreateAccount> {
             TextField(
               cursorColor: Colors.blue,
               controller: emailController,
+              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -60,6 +90,7 @@ class _createAccountState extends State<CreateAccount> {
             TextField(
               cursorColor: Colors.blue,
               controller: passwordController,
+              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -77,7 +108,8 @@ class _createAccountState extends State<CreateAccount> {
             Spacer(),
             TextField(
               cursorColor: Colors.blue,
-              controller: emailController,
+              controller: repasswordController,
+              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -98,7 +130,18 @@ class _createAccountState extends State<CreateAccount> {
                   height: 45,
                   width: 300,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if(passwordController.text.trim() == repasswordController.text.trim()){
+                          _signUp();
+                        }/*else if(email){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Email incorrect"), backgroundColor: Colors.red),
+                          );
+                        }*/else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Passwords do not match"), backgroundColor: Colors.red),
+                          );}
+                      },
                       child: Text(
                         "Create account",
                         style: TextStyle(

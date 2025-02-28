@@ -1,7 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/add_quiz.dart';
+import 'package:quiz_app/firebase_options.dart';
+import 'package:quiz_app/home_admin.dart';
 import 'package:quiz_app/login_page.dart';
 
-void main() {
+void main()async{
+  await WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+    );
   runApp(const MyApp());
 }
 
@@ -14,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: HomePageAdmin(),
     );
   }
 }
