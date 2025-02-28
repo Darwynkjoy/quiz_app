@@ -20,7 +20,7 @@ class _loginPageState extends State<LoginPage> {
           password: passwordController.text.trim()
           );
           print("User Loggedin");
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageAdmin()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageAdmin()));
       }catch(e){
         print("Login error: $e");
         _showErrorDialog(e.toString());

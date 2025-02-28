@@ -183,7 +183,7 @@ class _EditQuizState extends State<EditQuiz> {
                           if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
                           && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
                           && wrongController3.text.isNotEmpty){
-                           await Database.updateflutterDetails(widget.id, updateInfo);
+                           await FlutterDatabase.updateflutterDetails(widget.id, updateInfo);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("Question updated successfully!"),

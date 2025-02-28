@@ -159,7 +159,7 @@ class _AddQuizState extends State<AddQuiz> {
                           if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
                           && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
                           && wrongController3.text.isNotEmpty){
-                          await Database.addflutterDetails(flutterInfoMap, id);
+                          await FlutterDatabase.addflutterDetails(flutterInfoMap, id);
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("Question added successfully!"),

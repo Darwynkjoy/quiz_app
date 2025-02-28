@@ -15,7 +15,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
   Stream<QuerySnapshot>? FlutterStream;
 
   getontheload()async{
-    FlutterStream=await Database.getflutterDetatils();
+    FlutterStream=await FlutterDatabase.getflutterDetatils();
     setState(() {
     });
   }
@@ -98,7 +98,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                                     title: Text("Do you want to Delete the question ?",style: TextStyle(fontSize: 18,color: Colors.white),),
                                     actions: [
                                       TextButton(onPressed: ()async{
-                                        await Database.deleteflutterDetails(flutterQuestions["id"]);
+                                        await FlutterDatabase.deleteflutterDetails(flutterQuestions["id"]);
                                         Navigator.pop(context);
                                       }, child: Text("Yes",style: TextStyle(fontSize: 15,color: Colors.red),)),
                                       TextButton(onPressed: (){

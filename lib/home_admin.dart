@@ -25,7 +25,7 @@ class _HomePageAdminState extends State<HomePageAdmin> {
         title: Text("hi John",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: false,
         backgroundColor: Colors.black,
-        leading: Icon(Icons.arrow_back_ios,color: Colors.white,),
+        //leading: Icon(Icons.arrow_back_ios,color: Colors.white,),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
