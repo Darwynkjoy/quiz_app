@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/database.dart';
 class EditQuiz extends StatefulWidget {
+  final String name;
   final String id;
   final String question;
   final String answer;
@@ -10,13 +11,14 @@ class EditQuiz extends StatefulWidget {
 
   const EditQuiz(
     {super.key,
+    required this.name,
     required this.id,
     required this.question,
     required this.answer,
     required this.option2,
     required this.option3,
-    required this.option4}
-    );
+    required this.option4
+    });
   @override
   State<EditQuiz> createState() => _EditQuizState();
   }
@@ -42,7 +44,7 @@ class _EditQuizState extends State<EditQuiz> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("${widget}",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
+        title: Text("Edit question",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
         centerTitle: false,
         backgroundColor: Colors.black,
         leading: IconButton(onPressed: (){
@@ -183,7 +185,21 @@ class _EditQuizState extends State<EditQuiz> {
                           if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
                           && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
                           && wrongController3.text.isNotEmpty){
-                           await FlutterDatabase.updateflutterDetails(widget.id, updateInfo);
+                            if(widget.name=="Flutter"){
+                              await FlutterDatabase.updateflutterDetails(widget.id, updateInfo);
+                            }
+                            else if(widget.name=="Mern"){
+                              await MernDatabase.updateMernDetails(widget.id, updateInfo);
+                            }
+                            else if(widget.name=="Python"){
+                              await PythonDatabase.updatePythonDetails(widget.id, updateInfo);
+                            }
+                            else if(widget.name=="Java"){
+                              await JavaDatabase.updateJavaDetails(widget.id, updateInfo);
+                            }
+                            else{
+                              await CDatabase.updateCDetails(widget.id, updateInfo);
+                            }
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("Question updated successfully!"),

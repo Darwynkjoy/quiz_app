@@ -22,19 +22,29 @@ class _HomePageAdminState extends State<HomePageAdmin> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("hi John",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),
+        title: RichText(
+          text: TextSpan(
+            text: "Triv",
+            style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold, color: Colors.white),
+            children: <TextSpan>[
+              TextSpan(
+                text: "io",
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+            ],
+          ),
+        ),
         centerTitle: false,
-        backgroundColor: Colors.black,
-        //leading: Icon(Icons.arrow_back_ios,color: Colors.white,),
+        backgroundColor: Colors.blue,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: Container(
-              height: 40,
-              width: 40,
+              height: 50,
+              width: 50,
               decoration: BoxDecoration(
                 shape: BoxShape.circle, 
-                image: DecorationImage(image: AssetImage("assets/images/pic.jpg"),fit: BoxFit.fill)
+                image: DecorationImage(image: AssetImage("assets/images/pic.jpg"),fit: BoxFit.contain),border: Border.all(width: 2,color: Colors.black)
                 ),
               ),
           ),
@@ -80,7 +90,6 @@ class _HomePageAdminState extends State<HomePageAdmin> {
                               ),
                               Spacer(),
                               Text("${quizItems[index]}",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),),
-                              Text("No of questions",style: TextStyle(fontSize: 18,color: Colors.white,),),
                               Spacer()
                             ],
                           ),

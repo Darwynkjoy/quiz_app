@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/database.dart';
 import 'package:random_string/random_string.dart';
 class AddQuiz extends StatefulWidget {
-  const AddQuiz({super.key});
+  final String name;
+  const AddQuiz({super.key,required this.name});
   @override
   State<AddQuiz> createState() => _AddQuizState();
   }
@@ -18,7 +19,8 @@ class _AddQuizState extends State<AddQuiz> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("${widget}",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
+        title: Text("Add question",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
+        centerTitle: false,
         backgroundColor: Colors.black,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
@@ -146,41 +148,25 @@ class _AddQuizState extends State<AddQuiz> {
                     height: 45,
                     width: 300,
                     child: ElevatedButton(
-                        onPressed: ()async{
-                          String id=randomAlphaNumeric(10);
-                          Map<String,dynamic> flutterInfoMap={
-                            "question":questionController.text.trim(),
-                            "answer":answerController.text.trim(),
-                            "option2":wrongController1.text.trim(),
-                            "option3":wrongController2.text.trim(),
-                            "option4":wrongController3.text.trim(),
-                            "id":id,
-                          };
-                          if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
-                          && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
-                          && wrongController3.text.isNotEmpty){
-                          await FlutterDatabase.addflutterDetails(flutterInfoMap, id);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Question added successfully!"),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
-                            setState(() {
-                              questionController.clear();
-                              answerController.clear();
-                              wrongController1.clear();
-                              wrongController2.clear();
-                              wrongController3.clear();
-                            });
-                            Navigator.pop(context);
-                          }else{
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Fill all textfields"),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
+                        onPressed: (){
+                          if(widget.name=="Flutter"){
+                          flutter();
+                          print(widget.name);
+                          }
+                          else if(widget.name=="Mern"){
+                            mern();
+                            print(widget.name);
+                          }
+                          else if(widget.name=="Python"){
+                            python();
+                            print(widget.name);
+                          }
+                          else if(widget.name=="Java"){
+                            java();
+                            print(widget.name);
+                          }
+                          else{
+                            C();
                           }
                         },
                         child: Text(
@@ -196,5 +182,191 @@ class _AddQuizState extends State<AddQuiz> {
         ),
       ),
     );
+  }
+  Future flutter()async{
+        String id=randomAlphaNumeric(10);
+        Map<String,dynamic> flutterInfoMap={
+          "question":questionController.text.trim(),
+          "answer":answerController.text.trim(),
+          "option2":wrongController1.text.trim(),
+          "option3":wrongController2.text.trim(),
+          "option4":wrongController3.text.trim(),
+          "id":id,
+        };
+        if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
+        && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
+        && wrongController3.text.isNotEmpty){
+        await FlutterDatabase.addflutterDetails(flutterInfoMap, id);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Question added successfully!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+          setState(() {
+            questionController.clear();
+            answerController.clear();
+            wrongController1.clear();
+            wrongController2.clear();
+            wrongController3.clear();
+          });
+          Navigator.pop(context);
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Fill all textfields"),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+
+Future mern()async{
+    String id=randomAlphaNumeric(10);
+    Map<String,dynamic> mernInfoMap={
+      "question":questionController.text.trim(),
+      "answer":answerController.text.trim(),
+      "option2":wrongController1.text.trim(),
+      "option3":wrongController2.text.trim(),
+      "option4":wrongController3.text.trim(),
+      "id":id,
+    };
+    if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
+    && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
+    && wrongController3.text.isNotEmpty){
+    await MernDatabase.addMernDetails(mernInfoMap, id);
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Question added successfully!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      setState(() {
+        questionController.clear();
+        answerController.clear();
+        wrongController1.clear();
+        wrongController2.clear();
+        wrongController3.clear();
+      });
+      Navigator.pop(context);
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Fill all textfields"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+Future python()async{
+    String id=randomAlphaNumeric(10);
+    Map<String,dynamic> pythonInfoMap={
+      "question":questionController.text.trim(),
+      "answer":answerController.text.trim(),
+      "option2":wrongController1.text.trim(),
+      "option3":wrongController2.text.trim(),
+      "option4":wrongController3.text.trim(),
+      "id":id,
+    };
+    if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
+    && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
+    && wrongController3.text.isNotEmpty){
+    await PythonDatabase.addPythonDetails(pythonInfoMap, id);
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Question added successfully!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      setState(() {
+        questionController.clear();
+        answerController.clear();
+        wrongController1.clear();
+        wrongController2.clear();
+        wrongController3.clear();
+      });
+      Navigator.pop(context);
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Fill all textfields"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+Future java()async{
+    String id=randomAlphaNumeric(10);
+    Map<String,dynamic> javaInfoMap={
+      "question":questionController.text.trim(),
+      "answer":answerController.text.trim(),
+      "option2":wrongController1.text.trim(),
+      "option3":wrongController2.text.trim(),
+      "option4":wrongController3.text.trim(),
+      "id":id,
+    };
+    if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
+    && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
+    && wrongController3.text.isNotEmpty){
+    await JavaDatabase.addJavaDetails(javaInfoMap, id);
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Question added successfully!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      setState(() {
+        questionController.clear();
+        answerController.clear();
+        wrongController1.clear();
+        wrongController2.clear();
+        wrongController3.clear();
+      });
+      Navigator.pop(context);
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Fill all textfields"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+Future C()async{
+    String id=randomAlphaNumeric(10);
+    Map<String,dynamic> cInfoMap={
+      "question":questionController.text.trim(),
+      "answer":answerController.text.trim(),
+      "option2":wrongController1.text.trim(),
+      "option3":wrongController2.text.trim(),
+      "option4":wrongController3.text.trim(),
+      "id":id,
+    };
+    if(questionController.text.isNotEmpty && answerController.text.isNotEmpty 
+    && wrongController1.text.isNotEmpty && wrongController2.text.isNotEmpty 
+    && wrongController3.text.isNotEmpty){
+    await CDatabase.addCDetails(cInfoMap, id);
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Question added successfully!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      setState(() {
+        questionController.clear();
+        answerController.clear();
+        wrongController1.clear();
+        wrongController2.clear();
+        wrongController3.clear();
+      });
+      Navigator.pop(context);
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Fill all textfields"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/add_quiz.dart';
+import 'package:quiz_app/addquiz_flutter.dart';
 import 'package:quiz_app/database.dart';
-import 'package:quiz_app/edit_quiz.dart';
+import 'package:quiz_app/editquiz_flutter.dart';
 class QuestionsPage extends StatefulWidget {
   final String name;
   const QuestionsPage({super.key,required this.name});
@@ -15,7 +15,21 @@ class _QuestionsPageState extends State<QuestionsPage> {
   Stream<QuerySnapshot>? FlutterStream;
 
   getontheload()async{
-    FlutterStream=await FlutterDatabase.getflutterDetatils();
+    if(widget.name=="Flutter"){
+      FlutterStream=await FlutterDatabase.getflutterDetatils();
+      }
+    else if(widget.name=="Mern"){
+        FlutterStream=await MernDatabase.getMernDetatils();
+      }
+    else if(widget.name=="Python"){
+        FlutterStream=await PythonDatabase.getPythonDetatils();
+      }
+    else if(widget.name=="Java"){
+        FlutterStream=await JavaDatabase.getJavaDetatils();
+      }
+    else{
+      FlutterStream=await CDatabase.getCDetatils();
+    }
     setState(() {
     });
   }
@@ -38,16 +52,16 @@ class _QuestionsPageState extends State<QuestionsPage> {
           Navigator.pop(context);
         }, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)),
       ),
-      body: AllflutterDetails(),
+      body: AllQuestionDetails(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightGreenAccent,
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>AddQuiz()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>AddQuiz(name: widget.name)));
         },
         child: Icon(Icons.add,color: Colors.black,size: 35,),),
     );
   }
-  Widget AllflutterDetails(){
+  Widget AllQuestionDetails(){
     return StreamBuilder(stream: FlutterStream,
     builder: (context,AsyncSnapshot<QuerySnapshot>snapshots){
       if(snapshots.connectionState == ConnectionState.waiting){
@@ -89,7 +103,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                               Text("answer: ${flutterQuestions["answer"]}",style: TextStyle(fontSize: 16,color: Colors.white),maxLines: 3,overflow: TextOverflow.ellipsis,),
                               Spacer(),
                               IconButton(onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditQuiz(id: flutterQuestions.id,question: flutterQuestions["question"], answer: flutterQuestions["answer"], option2: flutterQuestions["option2"], option3: flutterQuestions["option3"], option4: flutterQuestions["option4"])));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditQuiz(name: widget.name,id: flutterQuestions.id,question: flutterQuestions["question"], answer: flutterQuestions["answer"], option2: flutterQuestions["option2"], option3: flutterQuestions["option3"], option4: flutterQuestions["option4"])));
                               }, icon: Icon(Icons.edit,color: Colors.lightGreenAccent,)),
                               IconButton(onPressed: ()async{
                                 showDialog(context: context, builder: (BuildContext context){
@@ -98,7 +112,21 @@ class _QuestionsPageState extends State<QuestionsPage> {
                                     title: Text("Do you want to Delete the question ?",style: TextStyle(fontSize: 18,color: Colors.white),),
                                     actions: [
                                       TextButton(onPressed: ()async{
+                                        if(widget.name=="Flutter"){
                                         await FlutterDatabase.deleteflutterDetails(flutterQuestions["id"]);
+                                        }
+                                        else if(widget.name=="Mern"){
+                                          await MernDatabase.deleteMernDetails(flutterQuestions["id"]);
+                                        }
+                                        else if(widget.name=="Python"){
+                                          await PythonDatabase.deletePythonDetails(flutterQuestions["id"]);
+                                        }
+                                        else if(widget.name=="Java"){
+                                          await JavaDatabase.deleteJavaDetails(flutterQuestions["id"]);
+                                        }
+                                        else{
+                                          await CDatabase.deleteCDetails(flutterQuestions["id"]);
+                                        }
                                         Navigator.pop(context);
                                       }, child: Text("Yes",style: TextStyle(fontSize: 15,color: Colors.red),)),
                                       TextButton(onPressed: (){
