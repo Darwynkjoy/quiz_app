@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/questions_page.dart';
-class HomePageAdmin extends StatefulWidget {
-  const HomePageAdmin({super.key});
+import 'package:quiz_app/quizpage_user.dart';
+class HomeUser extends StatefulWidget {
+  const HomeUser({super.key});
 
   @override
-  State<HomePageAdmin> createState() => _HomePageAdminState();
+  State<HomeUser> createState() => _HomeUserState();
 }
 
-class _HomePageAdminState extends State<HomePageAdmin> {
+class _HomeUserState extends State<HomeUser> {
 
   List <String> quizItems=["Flutter","Mern","Python","Java","C++"];
   List <String> imageItems=[
@@ -68,7 +69,7 @@ class _HomePageAdminState extends State<HomePageAdmin> {
                   itemCount: quizItems.length,
                   itemBuilder: (context,index){
                     return GestureDetector(
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>QuestionsPage(name: quizItems[index]))),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizpageUser())),
                       child: Container(
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 51, 51, 51),
