@@ -4,7 +4,6 @@ import 'package:quiz_app/firebase_options.dart';
 import 'package:quiz_app/home_admin.dart';
 import 'package:quiz_app/home_user.dart';
 import 'package:quiz_app/login_page.dart';
-import 'package:quiz_app/quizpage_user.dart';
 
 void main()async{
   await WidgetsFlutterBinding.ensureInitialized();
