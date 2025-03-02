@@ -68,7 +68,7 @@ class _HomeUserState extends State<HomeUser> {
                   itemCount: quizItems.length,
                   itemBuilder: (context,index){
                     return GestureDetector(
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizpageUser())),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizpageUser(name: quizItems[index],))),
                       child: Container(
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 51, 51, 51),
