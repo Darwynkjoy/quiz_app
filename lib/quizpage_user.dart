@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:quiz_app/home_user.dart';
 class QuizpageUser extends StatefulWidget {
   const QuizpageUser({super.key});
 
@@ -28,6 +29,22 @@ class _QuizpageUserState extends State<QuizpageUser> {
               children: [
                 IconButton(
                   onPressed: () {
+                    showDialog(context: context, builder: (BuildContext context){
+                      return AlertDialog(
+                        backgroundColor: const Color.fromARGB(255, 51, 51, 51),
+                        title: Text("Would you like to exit the quiz? Your progress may not be saved.",style: TextStyle(color: Colors.white),),
+                        actions: [
+                          TextButton(onPressed: (){
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeUser()));
+                          },
+                          child: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.red,fontWeight: FontWeight.bold),)),
+                          TextButton(onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          child: Text("No",style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold),))
+                        ],
+                      );
+                    });
                   },
                   icon: Icon(Icons.close, color: Colors.white),
                   style: ButtonStyle(
