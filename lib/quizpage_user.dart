@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:quiz_app/database.dart';
+import 'package:quiz_app/finishpage_user.dart';
 import 'package:quiz_app/home_user.dart';
 class QuizpageUser extends StatefulWidget {
   final String name;
@@ -147,7 +148,7 @@ class _QuizpageUserState extends State<QuizpageUser> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            CircularPercentIndicator(
+                            /*CircularPercentIndicator(
                               radius: 60,
                               lineWidth: 6,
                               percent: .6,
@@ -155,7 +156,7 @@ class _QuizpageUserState extends State<QuizpageUser> {
                               backgroundColor: Colors.grey.shade50,
                               circularStrokeCap: CircularStrokeCap.round,
                               center: Text("20s",style: TextStyle(color: Colors.white),),
-                              ),
+                              ),*/
                             Text("${questions["question"]}",
                             style: TextStyle(fontSize: 20,color: Colors.white),
                             )
@@ -175,7 +176,11 @@ class _QuizpageUserState extends State<QuizpageUser> {
                             ),
                             backgroundColor: WidgetStatePropertyAll(Colors.transparent)
                         ),
-                        onPressed: (){},
+                        onPressed: () {
+                          setState(() {
+                            Answer = !Answer;
+                          });
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -207,7 +212,11 @@ class _QuizpageUserState extends State<QuizpageUser> {
                             ),
                             backgroundColor: WidgetStatePropertyAll(Colors.transparent)
                         ),
-                        onPressed: (){},
+                        onPressed: () {
+                          setState(() {
+                            option2 = !option2;
+                          });
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -239,7 +248,11 @@ class _QuizpageUserState extends State<QuizpageUser> {
                             ),
                             backgroundColor: WidgetStatePropertyAll(Colors.transparent)
                         ),
-                        onPressed: (){},
+                        onPressed: () {
+                          setState(() {
+                            option3 = !option3;
+                          });
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -271,7 +284,11 @@ class _QuizpageUserState extends State<QuizpageUser> {
                             ),
                             backgroundColor: WidgetStatePropertyAll(Colors.transparent)
                         ),
-                        onPressed: (){},
+                        onPressed: () {
+                          setState(() {
+                            option4 = !option4;
+                          });
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -311,12 +328,16 @@ class _QuizpageUserState extends State<QuizpageUser> {
                           } else {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeUser()),
+                              MaterialPageRoute(builder: (context) => FinishpageUser(name: widget.name,)),
                             );
                           }
                         },
-                        child: Text("Next",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),))),
-                      ],
+                        child: Text(
+                                (_currentPage! + 1 == snapshots.data!.docs.length) ? "Finish" : "Next",
+                                style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                              ),
+                            )),
+                  ],
                     );
                   }),
                 ),
