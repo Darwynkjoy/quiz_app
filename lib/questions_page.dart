@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/addquiz_flutter.dart';
+import 'package:quiz_app/addquiz_admin.dart';
 import 'package:quiz_app/database.dart';
-import 'package:quiz_app/editquiz_flutter.dart';
+import 'package:quiz_app/editquiz_admin.dart';
 class QuestionsPage extends StatefulWidget {
   final String name;
   const QuestionsPage({super.key,required this.name});
@@ -47,7 +47,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
       appBar: AppBar(
         title: Text("${widget.name}",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
         centerTitle: false,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
         }, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)),
@@ -103,7 +103,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                               Text("answer: ${flutterQuestions["answer"]}",style: TextStyle(fontSize: 16,color: Colors.white),maxLines: 3,overflow: TextOverflow.ellipsis,),
                               Spacer(),
                               IconButton(onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditQuiz(name: widget.name,id: flutterQuestions.id,question: flutterQuestions["question"], answer: flutterQuestions["answer"], option2: flutterQuestions["option2"], option3: flutterQuestions["option3"], option4: flutterQuestions["option4"])));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditQuiz(name: widget.name,id: flutterQuestions.id,question: flutterQuestions["question"], answer: flutterQuestions["answer"],option1: flutterQuestions["option1"] ,option2: flutterQuestions["option2"], option3: flutterQuestions["option3"], option4: flutterQuestions["option4"])));
                               }, icon: Icon(Icons.edit,color: Colors.lightGreenAccent,)),
                               IconButton(onPressed: ()async{
                                 showDialog(context: context, builder: (BuildContext context){
