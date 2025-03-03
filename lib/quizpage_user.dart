@@ -54,7 +54,26 @@ class _QuizpageUserState extends State<QuizpageUser> {
       backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Column(
+        child: AllQuestionDetails()
+      )
+    );
+  }
+
+  Widget AllQuestionDetails(){
+    return StreamBuilder(stream: FlutterStream,
+    builder: (context,AsyncSnapshot<QuerySnapshot>snapshots){
+      int totalQuestions = snapshots.data!.docs.length;
+      double progressValue = (_currentPage! + 1) / totalQuestions;
+      if(snapshots.connectionState == ConnectionState.waiting){
+        return Center(child: CircularProgressIndicator(),);
+      }
+      if(snapshots.hasError){
+        return Text("an error has occured ${snapshots.error}");
+      }
+      if(!snapshots.hasData || snapshots.data!.docs.isEmpty){
+        return Center(child: Text("Data is not available"),);
+      }
+        return Column(
           children: [
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,109 +107,93 @@ class _QuizpageUserState extends State<QuizpageUser> {
                     ),
                   ),
                   LinearPercentIndicator(
-                    width: 250,
+                    width: 270,
                     lineHeight: 16,
-                    percent: .6,
+                    percent: progressValue.clamp(0.0, 1.0),
+                    animation: true,
+                    animateFromLastPercent: true,
+                    animationDuration: 500,
                     progressColor: Colors.amber,
                     backgroundColor: Colors.amber.shade50,
                     linearStrokeCap: LinearStrokeCap.roundAll,
-                    trailing: Text(" 8/10",style: TextStyle(fontSize: 18,color: Colors.blue),),
+                    trailing: Text(" ${_currentPage! +1}/${snapshots.data!.docs.length}",style: TextStyle(fontSize: 18,color: Colors.blue),),
                     )
                 ],
               ),
             Text("${widget.name}",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
-            AllQuestionDetails(), // question page 
-          ],
-        ),
-      )
-    );
-  }
-
-  Widget AllQuestionDetails(){
-    return StreamBuilder(stream: FlutterStream,
-    builder: (context,AsyncSnapshot<QuerySnapshot>snapshots){
-      if(snapshots.connectionState == ConnectionState.waiting){
-        return Center(child: CircularProgressIndicator(),);
-      }
-      if(snapshots.hasError){
-        return Text("an error has occured ${snapshots.error}");
-      }
-      if(!snapshots.hasData || snapshots.data!.docs.isEmpty){
-        return Center(child: Text("Data is not available"),);
-      }
-        return Expanded(
-          child: PageView.builder(
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            controller: questionsPage,
-            itemCount: snapshots.data!.docs.length,
-            itemBuilder: (context,index){
-              DocumentSnapshot questions=snapshots.data!.docs[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: 250,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromARGB(255, 51, 51, 51),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircularPercentIndicator(
-                          radius: 60,
-                          lineWidth: 6,
-                          percent: .6,
-                          progressColor: Colors.blueAccent,
-                          backgroundColor: Colors.grey.shade50,
-                          circularStrokeCap: CircularStrokeCap.round,
-                          center: Text("20s",style: TextStyle(color: Colors.white),),
-                          ),
-                        Text("${questions["question"]}",
-                        style: TextStyle(fontSize: 20,color: Colors.white),
-                        )
-                      ],
-                    ),
-                ),
-                SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: BorderSide(color: Colors.white, width: 2),
-                          ),
+            Expanded(
+              child: PageView.builder(
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                controller: questionsPage,
+                itemCount: snapshots.data!.docs.length,
+                itemBuilder: (context,index){
+                  DocumentSnapshot questions=snapshots.data!.docs[index];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      height: 250,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(255, 51, 51, 51),
                         ),
-                        backgroundColor: WidgetStatePropertyAll(Colors.transparent)
-                    ),
-                    onPressed: (){},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("${questions["answer"]}",style: TextStyle(fontSize: 20,color: Colors.white),),
-                        Spacer(),
-                        Checkbox(
-                          shape: CircleBorder(),
-                          checkColor: Colors.white,
-                          activeColor: Colors.blue,
-                          value: Answer,
-                          onChanged: (bool? newValue) { 
-                            setState(() {
-                              Answer = newValue!;
-                            });
-                          },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 60,
+                              lineWidth: 6,
+                              percent: .6,
+                              progressColor: Colors.blueAccent,
+                              backgroundColor: Colors.grey.shade50,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              center: Text("20s",style: TextStyle(color: Colors.white),),
+                              ),
+                            Text("${questions["question"]}",
+                            style: TextStyle(fontSize: 20,color: Colors.white),
+                            )
+                          ],
                         ),
-                      ],
-                    ))),
+                    ),
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: BorderSide(color: Colors.white, width: 2),
+                              ),
+                            ),
+                            backgroundColor: WidgetStatePropertyAll(Colors.transparent)
+                        ),
+                        onPressed: (){},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("${questions["answer"]}",style: TextStyle(fontSize: 20,color: Colors.white),),
+                            Spacer(),
+                            Checkbox(
+                              shape: CircleBorder(),
+                              checkColor: Colors.white,
+                              activeColor: Colors.blue,
+                              value: Answer,
+                              onChanged: (bool? newValue) { 
+                                setState(() {
+                                  Answer = newValue!;
+                                });
+                              },
+                            ),
+                          ],
+                        ))),
                     SizedBox(
                       height: 50,
                       width: double.infinity,
@@ -313,11 +316,13 @@ class _QuizpageUserState extends State<QuizpageUser> {
                           }
                         },
                         child: Text("Next",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),))),
-                  ],
-                );
-              }),
+                      ],
+                    );
+                  }),
+                ),
+              ],
             );
-    }
+      }
     );
   }
 }
