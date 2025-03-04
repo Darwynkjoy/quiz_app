@@ -12,18 +12,34 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: RichText(
+          text: TextSpan(
+            text: "Triv",
+            style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold, color: Colors.white),
+            children: <TextSpan>[
+              TextSpan(
+                text: "io",
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+            ],
+          ),
+        ),
+        centerTitle: false,
+        backgroundColor: Colors.blue,
+        leading: IconButton(
+                onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage())),
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.white,
+                )),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.white,
-                )),
-            SizedBox(height: 100,),
+            SizedBox(height: 80,),
             Text(
               "Forgot password ?",
               style: TextStyle(

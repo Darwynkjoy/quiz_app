@@ -4,7 +4,9 @@ import 'package:quiz_app/home_user.dart';
 import 'package:quiz_app/quizpage_user.dart';
 class FinishpageUser extends StatefulWidget {
   final String name;
-  const FinishpageUser({super.key,required this.name});
+  final int totalQuestions;
+  final int score;
+  const FinishpageUser({super.key,required this.name,required this.totalQuestions,required this.score});
 
   @override
   State<FinishpageUser> createState() => _FinishpageUserState();
@@ -28,7 +30,7 @@ class _FinishpageUserState extends State<FinishpageUser> {
             ),
             Text("Congratulation",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),
             Text("Your score",style: TextStyle(fontSize: 25,color: Colors.white38),),
-            Text("10/10",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold,color: const Color.fromARGB(255, 79, 250, 0)),),
+            Text("${widget.score}/${widget.totalQuestions}",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold,color: const Color.fromARGB(255, 79, 250, 0)),),
             Text("you did a good job",style: TextStyle(fontSize: 18,color: Colors.white38),),
             Spacer(),
             Row(
@@ -36,7 +38,7 @@ class _FinishpageUserState extends State<FinishpageUser> {
               children: [
                 SizedBox(
                   height: 50,
-                  width: 180,
+                  width: 160,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       shape: WidgetStatePropertyAll(
@@ -57,7 +59,7 @@ class _FinishpageUserState extends State<FinishpageUser> {
                         
                   SizedBox(
                     height: 50,
-                    width: 180,
+                    width: 160,
                     child: ElevatedButton(
                       style: ButtonStyle(
                         shape: WidgetStatePropertyAll(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/login_page.dart';
 import 'package:quiz_app/quizpage_user.dart';
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -50,6 +51,7 @@ class _HomeUserState extends State<HomeUser> {
           ),
         ],
       ),
+      drawer: _buildDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -100,6 +102,35 @@ class _HomeUserState extends State<HomeUser> {
             )
           ],
         ),
+      ),
+    );
+  }
+  Widget _buildDrawer() {
+    return Drawer(
+      backgroundColor: Colors.black,
+      child: ListView(
+        children: [
+          UserAccountsDrawerHeader(
+            decoration: BoxDecoration(color: Colors.blue),
+            accountName: Text("User", style: TextStyle(fontSize: 18, color: Colors.white)),
+            accountEmail: Text( "Logged In", style: TextStyle(fontSize: 16, color: Colors.white)),
+            currentAccountPicture: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle, 
+                image: DecorationImage(image: AssetImage("assets/images/pic.jpg"),fit: BoxFit.contain),border: Border.all(width: 2,color: Colors.black)
+                ),
+              ),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout, color: Colors.red),
+            title: Text("Logout", style: TextStyle(color: Colors.red)),
+            onTap: (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+            },
+          ),
+        ],
       ),
     );
   }

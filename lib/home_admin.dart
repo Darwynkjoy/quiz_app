@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/login_page.dart';
 import 'package:quiz_app/questions_page.dart';
 class HomePageAdmin extends StatefulWidget {
   const HomePageAdmin({super.key});
@@ -31,6 +32,10 @@ class _HomePageAdminState extends State<HomePageAdmin> {
                 text: "io",
                 style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.black),
               ),
+              TextSpan(
+                text: " admin",
+                style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold, color: Colors.white),
+              ),
             ],
           ),
         ),
@@ -50,6 +55,7 @@ class _HomePageAdminState extends State<HomePageAdmin> {
           ),
         ],
       ),
+      drawer:  _buildDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -100,6 +106,36 @@ class _HomePageAdminState extends State<HomePageAdmin> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      backgroundColor: Colors.black,
+      child: ListView(
+        children: [
+          UserAccountsDrawerHeader(
+            decoration: BoxDecoration(color: Colors.blue),
+            accountName: Text("Admin", style: TextStyle(fontSize: 18, color: Colors.white)),
+            accountEmail: Text( "Logged In", style: TextStyle(fontSize: 16, color: Colors.white)),
+            currentAccountPicture: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle, 
+                image: DecorationImage(image: AssetImage("assets/images/pic.jpg"),fit: BoxFit.contain),border: Border.all(width: 2,color: Colors.black)
+                ),
+              ),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout, color: Colors.red),
+            title: Text("Logout", style: TextStyle(color: Colors.red)),
+            onTap: (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+            },
+          ),
+        ],
       ),
     );
   }

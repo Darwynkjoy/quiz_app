@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/create_account.dart';
 import 'package:quiz_app/forgot_password.dart';
 import 'package:quiz_app/home_admin.dart';
+import 'package:quiz_app/home_user.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,14 +15,20 @@ class _loginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
 
   Future<void> _login()async{
-      try{
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim()
-          );
-          print("User Loggedin");
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePageAdmin()));
-      }catch(e){
+      try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (emailController.text.trim() == "darwynkjoy@gmail.com") {
+        print("Admin logged in");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePageAdmin()));
+      } else {
+        print("User logged in");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeUser()));
+      }
+    }catch(e){
         print("Login error: $e");
         _showErrorDialog(e.toString());
       }
@@ -46,12 +53,28 @@ class _loginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: RichText(
+          text: TextSpan(
+            text: "Triv",
+            style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold, color: Colors.white),
+            children: <TextSpan>[
+              TextSpan(
+                text: "io",
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+            ],
+          ),
+        ),
+        centerTitle: false,
+        backgroundColor: Colors.blue,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 150,),
+            SizedBox(height: 80,),
             Text(
               "Login",
               style: TextStyle(
@@ -107,7 +130,7 @@ class _loginPageState extends State<LoginPage> {
                 Spacer(),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotPassword()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ForgotPassword()));
                     },
                     child: Text(
                       "Forgot Password ?",
@@ -125,13 +148,14 @@ class _loginPageState extends State<LoginPage> {
                   width: 300,
                   child: ElevatedButton(
                       onPressed: () {
-                        if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
+                        if( emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
                         _login();
-                        }else{
+                        }
+                        else{
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                            content: Text("Email and password should not be empty"),
-                            backgroundColor: Colors.red,
+                              content: Text("Email and password should not be empty"),
+                              backgroundColor: Colors.red,
                             ));
                         }
                       },
@@ -170,7 +194,7 @@ class _loginPageState extends State<LoginPage> {
                   width: 300,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CreateAccount()));
