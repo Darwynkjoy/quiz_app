@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/login_page.dart';
 
@@ -7,7 +8,47 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  TextEditingController emailController = TextEditingController();
+
+TextEditingController emailController=TextEditingController();
+bool isLoading=false;
+String? errorMessage;
+
+Future <void> _sendForgotPasswordResetEmail()async{
+    setState(() {
+      isLoading=true;
+      errorMessage=null;
+    });
+  try{
+    await FirebaseAuth.instance.sendPasswordResetEmail(
+      email: emailController.text.trim(),
+      );
+      setState(() {
+        isLoading=false;
+      });
+      _ShowDialog("Password reset email sent!.please check your inbox");
+  } on FirebaseAuthException catch(e){
+    setState(() {
+      isLoading=false;
+    });
+    _ShowDialog(e.message ?? "an error occurred");
+  }
+  }
+
+  void _ShowDialog(String message){
+    showDialog(context: context, builder: (context)=>
+      AlertDialog(
+        title: Text("Notification"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: (){
+            Navigator.of(context).pop();
+          }, child: Text("OK"))
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +96,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             TextField(
               cursorColor: Colors.blue,
               controller: emailController,
+              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -75,7 +117,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   height: 45,
                   width: 300,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if(emailController.text.trim().isNotEmpty){
+                        _sendForgotPasswordResetEmail();
+                        }
+                        else{ ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Email should not be empty"),
+                              backgroundColor: Colors.red,
+                            ));
+                        }
+                      },
                       child: Text(
                         "Submit",
                         style: TextStyle(
