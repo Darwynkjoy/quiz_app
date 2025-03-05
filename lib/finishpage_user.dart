@@ -35,7 +35,7 @@ class _FinishpageUserState extends State<FinishpageUser> {
             Text(
               percentage >= 0.5 
                 ? "Congratulations!" 
-                : "Don't give up!", // Encouraging opposite message
+                : "Don't give up!",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),),
             Text("Your score",style: TextStyle(fontSize: 25,color: Colors.white38),),
             Text(
@@ -44,12 +44,12 @@ class _FinishpageUserState extends State<FinishpageUser> {
           fontSize: 35,
           fontWeight: FontWeight.bold,
           color: percentage >= 0.8  
-              ? Colors.green // Green for >= 80%
+              ? Colors.green
               : percentage >= 0.5  
-                  ? Colors.amber // Amber for 50% - 79%
+                  ? Colors.amber
                   : percentage >= 0.3  
-                      ? Colors.orange // Orange for 30% - 49%
-                      : Colors.red, // Red for < 30%
+                      ? Colors.orange
+                      : Colors.red, 
         ),
       ),
       Text(
@@ -115,10 +115,3 @@ class _FinishpageUserState extends State<FinishpageUser> {
     );
   }
 }
-/*Container(
-              height: 300,
-              width: 300,
-              child: Lottie.asset(
-                percentage >= 0.5 ? "assets/images/trophy.json" : "assets/images/fail.json",
-              ),
-            ),*/
