@@ -28,7 +28,9 @@ class _FinishpageUserState extends State<FinishpageUser> {
             Container(
               height: 300,
               width: 300,
-              child: Lottie.asset("assets/images/trophy.json"),
+              child: Lottie.asset(
+                percentage >= 0.5 ? "assets/images/trophy.json" : "assets/images/fail.json",
+              ),
             ),
             Text(
               percentage >= 0.5 
