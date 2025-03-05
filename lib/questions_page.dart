@@ -100,7 +100,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           Spacer(),
                           Row(
                             children: [
-                              Text("answer: ${flutterQuestions["answer"]}",style: TextStyle(fontSize: 16,color: Colors.white),maxLines: 3,overflow: TextOverflow.ellipsis,),
+                              Text("answer: ${flutterQuestions["answer"]}",style: TextStyle(fontSize: 16,color: Colors.white),overflow: TextOverflow.ellipsis,),
                               Spacer(),
                               IconButton(onPressed: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>EditQuiz(name: widget.name,id: flutterQuestions.id,question: flutterQuestions["question"], answer: flutterQuestions["answer"],option1: flutterQuestions["option1"] ,option2: flutterQuestions["option2"], option3: flutterQuestions["option3"], option4: flutterQuestions["option4"])));
